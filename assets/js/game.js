@@ -71,7 +71,7 @@ const fightOrSkip = function() {
 
     if (confirmSkip) {
       alert('Round skipped, goodbye!');
-      playerInfo.playerMoney = playerInfo.money - 10;
+      playerInfo.money = playerInfo.money - 10;
 
       return true;
       
@@ -190,20 +190,18 @@ else {
 
 const shop = function() {
   let shopOptionPrompt = prompt(
-    'Would you like to REFILL your Health, UPGRADE your Attack, or LEAVE the store? Please enter refill, upgrade, or leave.'
+    'Enter 1 to REFILL your Health, 2 to UPGRADE your Attack, 3 or LEAVE the store.'
   )
 
   switch(shopOptionPrompt) {
-    case "REFILL": // new case (fall thru)
-    case "refill": 
+    
+    case "1": 
       playerInfo.refillHealth();
       break;
-    case "UPGRADE": // new case
-    case "upgrade": 
+    case "2": 
       playerInfo.upgradeAttack();
       break;
-    case 'LEAVE':
-    case "leave": 
+    case "3": 
       alert("Come back soon!");
       break;
       default: 
