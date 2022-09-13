@@ -9,16 +9,12 @@ const randomNumber = function(min, max) {
 const getPlayerName = function() {
 
   let name = prompt("Enter your robot's name");
-
   while (name === "" || name === null || name === undefined || name.match(/^ *$/) !== null){
     alert('You need to enter a valid name');
-
     name = prompt("Enter your robot's name");
   }
   console.log('Your name is' + name);
-
   return name;
-
 }
 
 const playerInfo = {
@@ -61,25 +57,38 @@ var enemyInfo = [
   }
 ];
 
+const fightOrSkip = function() {
+  let promptFight = prompt('Would you like to fight or skip this round? Enter FIGHT or SKIP to proceed. Skipping subtracts $10 from your bank');
+  promptFight = promptFight.toLowerCase();
+    // Enter the conditional recursive function call here!
+  if (promptFight === '' || promptFight === null || promptFight.match(/^ *$/) !== null) {
+    alert('Enter a valid option');
+    return fightOrSkip();
+  }
+
+  if (promptFight === 'skip') {
+    confirmSkip = confirm('Are you sure you want to skip?')
+
+    if (confirmSkip) {
+      alert('Round skipped, goodbye!');
+      playerInfo.playerMoney = playerInfo.money - 10;
+
+      return true;
+      
+    } else {
+      return fightOrSkip();
+    }
+  }
+
+  return false;
+}
+
 // fight function (now with parameter for enemy's name)
 var fight = function(enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
     // ask player if they'd like to fight or run
-    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-
-    // if player picks "skip" confirm and then stop the loop
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      // confirm player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      // if yes (true), leave fight
-      if (confirmSkip) {
-        window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-        // subtract money from playerInfo.money for skipping
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        console.log("playerInfo.money", playerInfo.money);
-        break;
-      }
+    if(fightOrSkip()) {
+      break;
     }
 
     // remove enemy's health by subtracting the amount set in the playerInfo.attack variable
